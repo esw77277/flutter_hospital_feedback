@@ -16,77 +16,77 @@ class MyAppState extends State<Thanks> {
     return new MaterialApp(
         debugShowCheckedModeBanner: false,
         home: new Scaffold(body: new Builder(
-      builder: (BuildContext context) {
-        return new Stack(
-          children: <Widget>[
-            new Image.asset(
-              'asserts/404.jpg',
-              fit: BoxFit.fitWidth,
-            ),
-            new Center(
-              child: new Container(
-                height: 370.0,
-                child: Container(
-                  height: 250.0,
-                  child: new Card(
-                    color: Colors.white,
-                    elevation: 6.0,
-                    margin: EdgeInsets.only(right: 15.0, left: 15.0),
-                    child: new Wrap(
-                      children: <Widget>[
-                        Center(
-                          child: new Container(
-                              margin: EdgeInsets.only(top: 20.0),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-
-                              )),
-                        ),
-                        Center(
-                          child: new Container(
-                            margin: EdgeInsets.only(top: 20.0),
-                            child: new Text(
-                              'Success',
-                              style: TextStyle(
-                                  fontSize: 55.0, color: Colors.lightBlue),
+          builder: (BuildContext context) {
+            return new Stack(
+              children: <Widget>[
+                new Image.asset(
+                  'asserts/404.jpg',
+                  fit: BoxFit.fitWidth,
+                ),
+                new Center(
+                  child: new Container(
+                    height: 370.0,
+                    child: Container(
+                      height: 250.0,
+                      child: new Card(
+                        color: Colors.white,
+                        elevation: 6.0,
+                        margin: EdgeInsets.only(right: 15.0, left: 15.0),
+                        child: new Wrap(
+                          children: <Widget>[
+                            Center(
+                              child: new Container(
+                                  margin: EdgeInsets.only(top: 20.0),
+                                  
+                                  child:
+                                  Image.asset('images/successful.PNG'),
+                                  ),
                             ),
-                          ),
-                        ),
-                        Center(
-                          child: new Container(
-                            margin: EdgeInsets.only(top: 20.0),
-                            child: new Text(
-                              'you are all done',
-                              style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black),
+                            Center(
+                              child: new Container(
+                                margin: EdgeInsets.only(top: 20.0),
+                                child: new Text(
+                                  'Success',
+                                  style: TextStyle(
+                                      fontSize: 55.0, color: Colors.lightBlue),
+                                ),
+                              ),
                             ),
-                          ),
+                            Center(
+                              child: new Container(
+                                margin: EdgeInsets.only(top: 20.0),
+                                child: new Text(
+                                  'you are all done',
+                                  style: TextStyle(
+                                      fontSize: 20.0, color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(left: 120.0)),
+                          ],
                         ),
-                        Padding(padding: EdgeInsets.only(left: 120.0)),
-                      ],
+                      ),
                     ),
+                    padding: EdgeInsets.only(bottom: 30),
                   ),
                 ),
-                padding: EdgeInsets.only(bottom: 30),
-              ),
-            ),
-            new Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 310.0)),
-                Text('Thank you',
-                    style: new TextStyle(
-                        color: Colors.white,
-                        backgroundColor: Colors.lightBlue,
-                        fontSize: 35.0,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold)),
+                new Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(top: 310.0)),
+                    Text('Thank you',
+                        style: new TextStyle(
+                            color: Colors.white,
+                            backgroundColor: Colors.lightBlue,
+                            fontSize: 35.0,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ))
               ],
-            ))
-          ],
-        );
-      },
-    )));
+            );
+          },
+        )));
   }
 }
