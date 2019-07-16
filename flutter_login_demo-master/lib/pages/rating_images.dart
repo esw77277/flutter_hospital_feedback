@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login_demo/services/authentication.dart';
 import 'login_signup_page.dart';
 
+
+
+
+
 class Profile extends StatefulWidget {
   @override
   _AboutPageState createState() => new _AboutPageState();
@@ -26,7 +30,16 @@ class _AboutPageState extends State<Profile> {
           backgroundColor: const Color(0xFF0099a9),
         ),
         body: Column(children: <Widget>[
-          Text('The length of time that i had to wait to be seen was reasonable'),
+          // Text('The length of time that i had to wait to be seen was reasonable'),
+          //     margin: const EdgeInsets.only(top: 10.0),
+          Padding(
+            padding: const EdgeInsets.all(30),
+            child: new Text(
+              'The length of time that i had to wait to be seen was reasonable',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+
           Row(
             //ROW 1
             children: <Widget>[
@@ -40,12 +53,11 @@ class _AboutPageState extends State<Profile> {
                     Image.asset('assets/highlidisatiifes.png'),
                     Text('Highly DiSatiesfied'),
                   ],
-                 
                 ),
                 onTap: () {
                   msg = 'Highly DiSatisfied';
                   onclicked();
-                  
+
                   print(msg);
                 },
               ),
@@ -125,6 +137,16 @@ class _AboutPageState extends State<Profile> {
             )
           ]),
           Text(msg),
+
+          new RaisedButton(
+            child: const Text('Next',style: TextStyle(color: Colors.white),),
+            color: Theme.of(context).accentColor,
+            elevation: 4.0,
+            splashColor: Colors.blueGrey,
+            onPressed: () {
+              // Perform some action
+            },
+          ),
         ]));
   }
 }
