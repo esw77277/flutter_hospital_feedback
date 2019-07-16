@@ -12,47 +12,46 @@ class Profile extends StatefulWidget {
 class _AboutPageState extends State<Profile> {
   @override
   String msg = '';
-  String color='',nocolor='';
+
   onclicked() {
     setState(() {
       msg;
-      
-      
     });
   }
 
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text(''),
+          title: new Text('Out-patient satification'),
           backgroundColor: const Color(0xFF0099a9),
         ),
         body: Column(children: <Widget>[
+          Text('The length of time that i had to wait to be seen was reasonable'),
           Row(
             //ROW 1
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(29.0),
-                
               ),
-              
+
               GestureDetector(
                 child: Column(
                   children: <Widget>[
                     Image.asset('assets/highlidisatiifes.png'),
-                    Text('Highly Satiesfied'),
+                    Text('Highly DiSatiesfied'),
                   ],
+                 
                 ),
                 onTap: () {
-                  msg = 'Highly Satisfied';
+                  msg = 'Highly DiSatisfied';
                   onclicked();
+                  
                   print(msg);
                 },
               ),
 
               // ),
               GestureDetector(
-                //child: Image.asset('assets/disatidfied.png'),
                 child: Column(
                   children: <Widget>[
                     Image.asset('assets/disatidfied.png'),
@@ -66,7 +65,7 @@ class _AboutPageState extends State<Profile> {
                 },
               ),
               GestureDetector(
-                 child: Column(
+                child: Column(
                   children: <Widget>[
                     Image.asset('assets/niethersatnordis.png'),
                     Text('Niether-Satisfied'),
@@ -86,13 +85,12 @@ class _AboutPageState extends State<Profile> {
               padding: EdgeInsets.all(29.0),
             ),
             GestureDetector(
-              //child: Image.asset('assets/satisfied.png'),
               child: Column(
-                  children: <Widget>[
-                    Image.asset('assets/satisfied.png'),
-                    Text('Satisfied'),
-                  ],
-                ),
+                children: <Widget>[
+                  Image.asset('assets/satisfied.png'),
+                  Text('Satisfied'),
+                ],
+              ),
               onTap: () {
                 msg = 'Satisfied';
                 onclicked();
@@ -101,11 +99,11 @@ class _AboutPageState extends State<Profile> {
             ),
             GestureDetector(
               child: Column(
-                  children: <Widget>[
-                    Image.asset('assets/highlysatisied.png'),
-                    Text('highlysatisied'),
-                  ],
-                ),
+                children: <Widget>[
+                  Image.asset('assets/highlysatisied.png'),
+                  Text('highlysatisied'),
+                ],
+              ),
               onTap: () {
                 msg = 'highlysatisied';
                 onclicked();
