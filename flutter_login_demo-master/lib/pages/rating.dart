@@ -28,6 +28,7 @@ class Reg extends StatelessWidget {
     );
   }
 }
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   // This widget is the home page of your application. It is stateful, meaning
@@ -42,35 +43,34 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+
 class _MyHomePageState extends State<MyHomePage> {
+  String uname, uemail, umobile;
 
-
-  String uname,uemail,umobile;
-
-  getUname(uname){
-    this.uname=uname;
+  getUname(uname) {
+    this.uname = uname;
   }
 
-  getUemail(uemail){
-    this.uemail=uemail;
+  getUemail(uemail) {
+    this.uemail = uemail;
   }
 
-  getUmobile(umobile){
-    this.umobile=umobile;
+  getUmobile(umobile) {
+    this.umobile = umobile;
   }
 
-  createData(){
-    DocumentReference ds = Firestore.instance.collection('Registration').document(uname);
-    Map<String,dynamic> rdata={
-      "Name":uname,
-      "Email":uemail,
-      "Mobile":umobile,
+  createData() {
+    DocumentReference ds =
+        Firestore.instance.collection('Registration').document(uname);
+    Map<String, dynamic> rdata = {
+      "Name": uname,
+      "Email": uemail,
+      "Mobile": umobile,
     };
-    ds.setData(rdata).whenComplete((){print("Registration Successful");});
-
+    ds.setData(rdata).whenComplete(() {
+      print("Registration Successful");
+    });
   }
-
-
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   @override
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     final name = TextField(
-      onChanged: (String uname){
+      onChanged: (String uname) {
         getUname(uname);
       },
       //decoration: InputDecoration(labelText: "Name"),
@@ -91,10 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Name",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
-    final emailField   =  TextField(
-      onChanged: (String uemail){
+    final emailField = TextField(
+      onChanged: (String uemail) {
         getUemail(uemail);
       },
       style: style,
@@ -102,10 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Email",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
     final PhoneNumber = TextField(
-      onChanged: (String umobile){
+      onChanged: (String umobile) {
         getUmobile(umobile);
       },
       style: style,
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Phonenumber",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
     final Password = TextField(
       obscureText: true,
@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "password",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
     final loginButon = Material(
       elevation: 5.0,
@@ -134,9 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           createData();
           Navigator.push(
-           context,
-           MaterialPageRoute(builder: (context) => HomePage()),
-           );
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
         },
         child: Text("Register",
             textAlign: TextAlign.center,
@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Re enter password",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
     return Scaffold(
         appBar: new AppBar(
@@ -160,8 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
             new FlatButton(
                 child: new Text('Logout',
                     style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-                onPressed: ()
-                {
+                onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginSignUpPage()),
@@ -179,14 +178,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+
                     SizedBox(
                       height: 100.0,
                       child: Image.asset(
-                        "images/logo.jpg",
+                        "images/logo1.png",
                         fit: BoxFit.contain,
                       ),
                     ),
-
                     SizedBox(height: 10.0),
                     name,
                     SizedBox(height: 10.0),

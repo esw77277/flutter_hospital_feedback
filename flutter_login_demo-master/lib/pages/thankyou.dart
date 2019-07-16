@@ -48,7 +48,7 @@ class MyAppState extends State<Thanks> {
                             child: new Text(
                               'Success',
                               style: TextStyle(
-                                  fontSize: 55.0, color: Colors.green),
+                                  fontSize: 55.0, color: Colors.lightBlue),
                             ),
                           ),
                         ),
@@ -78,7 +78,7 @@ class MyAppState extends State<Thanks> {
                 Text('Thank you',
                     style: new TextStyle(
                         color: Colors.white,
-                        backgroundColor: Colors.green,
+                        backgroundColor: Colors.lightBlue,
                         fontSize: 35.0,
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.bold)),

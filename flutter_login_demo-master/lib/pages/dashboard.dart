@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_demo/services/authentication.dart';
-import 'home_page.dart';
 import 'login_signup_page.dart';
 import 'profile.dart';
 import 'rating.dart';
+import 'nabhdashboard.dart';
+
 
 void main() {
   runApp(new MaterialApp(
@@ -13,7 +14,6 @@ void main() {
     routes: <String, WidgetBuilder>{
       '/home': (BuildContext context) => new Home(),
       '/profile': (BuildContext context) => new Profile(),
-      '/about': (BuildContext context) => new HomePage(),
       //'/feedback': (BuildContext context) => new Feedback(),
     },
     //about: new AboutPage(),
@@ -89,7 +89,7 @@ class _HomePage extends State<Home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Profile()),
+                  MaterialPageRoute(builder: (context) => Reg()),
                 );
               },
             ),
@@ -120,7 +120,7 @@ class _HomePage extends State<Home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Home()),
+                  MaterialPageRoute(builder: (context) => NABHdashboard()),
                 );
               },
             ),
@@ -149,8 +149,11 @@ class _HomePage extends State<Home> {
             makeDashboardItem("Medicals", Icons.local_pharmacy),
             makeDashboardItem("Labs", Icons.local_hospital),
             makeDashboardItem("Gift Cards", Icons.card_giftcard),
-            makeDashboardItem("More", Icons.move_to_inbox)
+            makeDashboardItem("More", Icons.move_to_inbox),
+
+
           ],
+
         ),
       ),
     );
