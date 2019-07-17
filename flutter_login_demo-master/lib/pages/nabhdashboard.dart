@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-class NABHdashboard extends StatefulWidget {
+class Profiles extends StatefulWidget {
   @override
-  HomePageState createState() => HomePageState();
+  _AboutPageState createState() => new _AboutPageState();
 }
 
-class HomePageState extends State<NABHdashboard> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DashBoard',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      home: NABHdashboard(),
-    );
-  }
-}
-
-class _HomePageState extends State<NABHdashboard> {
+class _AboutPageState extends State<Profiles> {
   bool toggle = false;
   Map<String, double> dataMap = new Map();
   List<Color> colorList = [
@@ -31,16 +20,34 @@ class _HomePageState extends State<NABHdashboard> {
     Colors.deepOrange,
     Colors.indigoAccent,
   ];
+int gettotalcount(){
+  int i=0;
 
+  return i;
+}
   @override
   void initState() {
     super.initState();
-    dataMap.putIfAbsent("NotApplicable", () => 28);
-    dataMap.putIfAbsent("High Dissatified", () => 10);
-    dataMap.putIfAbsent("Dissatified", () => 8);
-    dataMap.putIfAbsent("Neither satified or Dissatified", () => 6);
-    dataMap.putIfAbsent("satified", () => 30);
-    dataMap.putIfAbsent("Highly satified", () => 28);
+    int totalcount=100;
+    int notapplicable = 10;
+    int HighDissatified = 20;
+    int Dissatified = 20;
+    int Neither = 10;
+    int satified = 20;
+    int Highlysat = 20;
+    double notapplicableper=(notapplicable/totalcount)*100;
+    double HighDissatifiedper=(HighDissatified/totalcount)*100;
+    double Dissatifiedper=(Dissatified/totalcount)*100;
+    double Neitherper=(Neither/totalcount)*100;
+    double satifiedper=(satified/totalcount)*100;
+    double Highlysatper=(Highlysat/totalcount)*100;
+    
+    dataMap.putIfAbsent("NotApplicable", () => notapplicableper);
+    dataMap.putIfAbsent("High Dissatified", () => HighDissatifiedper);
+    dataMap.putIfAbsent("Dissatified", () => Dissatifiedper);
+    dataMap.putIfAbsent("Neither satified or Dissatified", () => Neitherper);
+    dataMap.putIfAbsent("satified", () => satifiedper);
+    dataMap.putIfAbsent("Highly satified", () => Highlysatper);
   }
 
   @override
