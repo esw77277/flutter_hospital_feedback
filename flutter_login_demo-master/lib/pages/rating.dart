@@ -13,22 +13,12 @@ class Reg extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Register',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Register'),
     );
   }
 }
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   // This widget is the home page of your application. It is stateful, meaning
@@ -43,169 +33,223 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
-
 class _MyHomePageState extends State<MyHomePage> {
-  String uname, uemail, umobile;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _autovalidate=false;
+  String uname,uemail,umobile;
+  String _name,_email,_mobile;
+  bool _isLoading;
 
-  getUname(uname) {
-    this.uname = uname;
+  getUname(uname){
+    this.uname=uname;
   }
 
-  getUemail(uemail) {
-    this.uemail = uemail;
+  getUemail(uemail){
+    this.uemail=uemail;
   }
 
-  getUmobile(umobile) {
-    this.umobile = umobile;
+  getUmobile(umobile){
+    this.umobile=umobile;
   }
 
-  createData() {
-    DocumentReference ds =
-        Firestore.instance.collection('Registration').document(uname);
-    Map<String, dynamic> rdata = {
-      "Name": uname,
-      "Email": uemail,
-      "Mobile": umobile,
+  createData(){
+    DocumentReference ds = Firestore.instance.collection('Registration').document(uname);
+    Map<String,dynamic> rdata={
+      "Name":uname,
+      "Email":uemail,
+      "Mobile":umobile,
     };
-    ds.setData(rdata).whenComplete(() {
-      print("Registration Successful");
-    });
+    ds.setData(rdata).whenComplete((){print("Registration Successful");});
+
   }
+
+
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    final name = TextField(
-      onChanged: (String uname) {
-        getUname(uname);
-      },
-      //decoration: InputDecoration(labelText: "Name"),
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Name",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final emailField = TextField(
-      onChanged: (String uemail) {
-        getUemail(uemail);
-      },
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final PhoneNumber = TextField(
-      onChanged: (String umobile) {
-        getUmobile(umobile);
-      },
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Phonenumber",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final Password = TextField(
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "password",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final loginButon = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.lightBlue,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          createData();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-          );
-        },
-        child: Text("Register",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-    final RePassword = TextField(
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Re enter password",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: new AppBar(
-          title: new Text('Home'),
-          actions: <Widget>[
-            new FlatButton(
-                child: new Text('Logout',
-                    style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginSignUpPage()),
-                  );
-                })
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              color: Colors.white70,
-              child: Padding(
-                padding: const EdgeInsets.all(36.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-
-                    SizedBox(
-                      height: 100.0,
-                      child: Image.asset(
-                        "images/logo1.png",
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    name,
-                    SizedBox(height: 10.0),
-                    emailField,
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    PhoneNumber,
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    loginButon,
-                    SizedBox(
-                      height: 100.0,
-                    ),
-                  ],
-                ),
-              ),
+      body:Stack(
+        children: <Widget>[
+          Center(
+            child:new Image.asset('images/background.jpg',
+              width: size.width,
+              height: size.height,
+              fit: BoxFit.fill,
             ),
           ),
+          _showBody(),
+        ],
+      )
+    );
+  }
+  Widget _showBody(){
+    return new Container(
+        padding: EdgeInsets.all(30.0),
+        child: new Form(
+
+          key: _formKey,
+          child: new ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+
+             _showLogo(),
+              SizedBox(
+                height: 93.0,
+                width: 50.0,
+                child: Image.asset(
+                  "images/logo.png",
+                  fit: BoxFit.contain,
+                ),
+              ),
+              _showNameInput(),
+
+              _showEmailInput(),
+
+              _showMobileInput(),
+              SizedBox(
+                height: 50.0,
+                width: 50.0,
+              ),
+              _showPrimaryButton(),
+
+
+            ],
+          ),
         ));
+  }
+  Widget _showNameInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+      child: new TextFormField(
+          keyboardType: TextInputType.text,
+          validator: validateName,
+          onSaved: (String val) {
+            uname = val;
+          },
+          //decoration: InputDecoration(labelText: "Name"),
+          style: style,
+          decoration:new InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              hintText: "Name",
+              icon: new Icon(
+                Icons.account_box,
+                color: Colors.black,
+              )
+          )
+      ),
+    );
+  }
+  Widget _showEmailInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+      child: new TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        validator: validateEmail,
+        onSaved: (String val) {
+          uemail = val;
+        },
+        style: style,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            hintText: "Email",
+            icon: new Icon(
+              Icons.email,
+              color: Colors.black,
+            )
+        ),
+      ),
+    );
+  }
+  Widget _showMobileInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+      child: new TextFormField(
+        keyboardType: TextInputType.text,
+        validator: validateMobile,
+        onSaved: (String val) {
+          umobile = val;
+        },
+        style: style,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            hintText: "Mobile Number",
+            icon: new Icon(
+              Icons.mobile_screen_share,
+              color: Colors.black,
+            )
+        ),
+      ),
+    );
+  }
+  Widget _showLogo() {
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0,25.0, 0.0, 0.0),
+
+    );
+  }
+
+  Widget _showPrimaryButton() {
+    return new Material(
+      elevation: 5.0,
+      // borderRadius: BorderRadius.circular(30.0),
+      color: Colors.lightBlue,
+      child: new MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          onPressed: () {
+            _validateInputs();
+            // createData();
+          },
+          child: Text("Register",
+              textAlign: TextAlign.center,
+              style: style.copyWith(
+                  color: Colors.white, fontWeight: FontWeight.bold)),
+        ),
+
+      );
+
+  }
+  String validateName(String value) {
+    if (value.length < 3)
+      return 'Name must be more than 2 charater';
+    else
+      return null;
+  }
+
+  String validateMobile(String value) {
+// Indian Mobile number are of 10 digit only
+    if (value.length != 10)
+      return 'Mobile Number must be of 10 digit';
+    else
+      return null;
+  }
+
+  String validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value))
+      return 'Enter Valid Email';
+    else
+      return null;
+  }
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+//    If all data are correct then save data to out variables
+    createData();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+     // _formKey.currentState.save();
+    } else {
+//    If all data are not valid then start auto validation.
+      setState(() {
+        _autovalidate = true;
+      });
+    }
   }
 }
