@@ -4,6 +4,7 @@ import 'login_signup_page.dart';
 import 'profile.dart';
 import 'rating.dart';
 import 'nabhdashboard.dart';
+import 'userlist.dart';
 
 
 void main() {
@@ -124,6 +125,17 @@ class _HomePage extends State<Home> {
                 );
               },
             ),
+            new ListTile(
+              title: new Text("User List"),
+              trailing: new Icon(Icons.person_pin_circle),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => userslist()),
+                );
+              },
+            ),
+
 
             new ListTile(
               title: new Text("Logout"),
