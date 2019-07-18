@@ -160,226 +160,242 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(30),
-            child: StreamBuilder(
-                stream: Firestore.instance.collection('Questions').snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    //print('snapshot data $snapshot.data');
-                    return Text('Loading Data... Please Wait');
-                  }
-                  //_question = snapshot.data.documents[index]['Question']
-//imgPropFun();
-                  return //Row(
-                      Column(children: <Widget>[
-                    /*SizedBox(
-                      height: 200.0,
-                      width: 50.0,
-                    ),*/
-                    /*Text(
-                          snapshot.data.documents[0]['Category'],
+          child: StreamBuilder(
+              stream: Firestore.instance.collection('Questions').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text('Loading Data... Please Wait');
+                }
+                return //Row(
+                    Column(children: <Widget>[
+                      Container(
+                        /*padding: const EdgeInsets.only(
+                            left: 44.0, top: 30, bottom: 20, right: 42.2),
+                        color: Color.fromRGBO(208, 218, 226, 0.9),*/
+                        child: new Text(
+                          snapshot.data.documents[_count]['Question'],
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 30),
-                        ),*/
-                    Text(
-                      snapshot.data.documents[_count]['Question'],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 25),
-                    ),
-                    _count == 5
-                        ? CheckboxGroup(
-                            labels: <String>[
-                              snapshot.data.documents[_count]['Option1'],
-                              snapshot.data.documents[_count]['Option2'],
-                              snapshot.data.documents[_count]['Option3'],
-                              snapshot.data.documents[_count]['Option4'],
-                              snapshot.data.documents[_count]['Option5'],
-                            ],
-                            disabled: [
-                              snapshot.data.documents[_count]['Option6'],
-                            ],
-                            onChange: (bool isChecked, String label,
-                                    int index) =>
-                                print(
-                                    "isChecked: $isChecked   label: $label  index: $index"),
-                            onSelected: (List<String> checked) =>
-                                print("checked: ${checked.toString()}"),
-                          )
-                        : _count == 4
-                            ? new TextField(
-                                keyboardType: TextInputType.multiline,
-                                maxLines: 3,
-                              )
-                            : Column(children: <Widget>[
-                                Row(
-                                  //ROW 1
-                                  children: <Widget>[
-                                    /*Padding(
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                      ),
+
+                  _count == 5
+                      ? CheckboxGroup(
+                          labels: <String>[
+                            snapshot.data.documents[_count]['Option1'],
+                            snapshot.data.documents[_count]['Option2'],
+                            snapshot.data.documents[_count]['Option3'],
+                            snapshot.data.documents[_count]['Option4'],
+                            snapshot.data.documents[_count]['Option5'],
+                          ],
+                          disabled: [
+                            snapshot.data.documents[_count]['Option6'],
+                          ],
+                          onChange: (bool isChecked, String label, int index) =>
+                              print(
+                                  "isChecked: $isChecked   label: $label  index: $index"),
+                          onSelected: (List<String> checked) =>
+                              print("checked: ${checked.toString()}"),
+                        )
+                      : _count == 4
+                          ? new TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 3,
+                            )
+                          : Column(children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 30, bottom: 20),
+                              ),
+                              Row(
+                                //ROW 1
+                                children: <Widget>[
+                                  Padding(
                                     padding: EdgeInsets.all(23.0),
-                                  ),*/
-                                    GestureDetector(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Image.asset(
-                                              'images/' +
-                                                  imgNum[0].toString() +
-                                                  imgName[0] +
-                                                  '.png',
-                                              height: 50),
-                                          Text('Highly DiSatiesfied'),
-                                        ],
-                                      ),
-                                      onTap: () {
-                                        msg = 'Highly DiSatisfied';
-                                        setState(() {
-                                          msg;
-                                          imgName = ['b', '', '', '', '', ''];
-                                        });
-                                        print(msg);
-                                      },
+                                  ),
+                                  GestureDetector(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Image.asset(
+                                            'images/' +
+                                                imgNum[0].toString() +
+                                                imgName[0] +
+                                                '.png',
+                                            height: 50),
+                                        Text('Highly DiSatiesfied'),
+                                      ],
                                     ),
-                                    GestureDetector(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Image.asset(
-                                              'images/' +
-                                                  imgNum[1].toString() +
-                                                  imgName[1] +
-                                                  '.png',
-                                              height: 50),
-                                          Text('Dis-Satiesfied'),
-                                        ],
-                                      ),
-                                      onTap: () {
-                                        msg = 'Disatisfied';
-                                        setState(() {
-                                          msg;
-                                          imgName = ['', 'b', '', '', '', ''];
-                                        });
-                                        print(msg);
-                                      },
+                                    onTap: () {
+                                      msg = 'Highly DiSatisfied';
+                                      setState(() {
+                                        msg;
+                                        imgName = ['b', '', '', '', '', ''];
+                                      });
+                                      print(msg);
+                                    },
+                                  ),
+                                  GestureDetector(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Image.asset(
+                                            'images/' +
+                                                imgNum[1].toString() +
+                                                imgName[1] +
+                                                '.png',
+                                            height: 50),
+                                        Text('Dis-Satiesfied'),
+                                      ],
                                     ),
-                                    GestureDetector(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Image.asset(
-                                              'images/' +
-                                                  imgNum[2].toString() +
-                                                  imgName[2] +
-                                                  '.png',
-                                              height: 50),
-                                          Text('Niether-Satisfied'),
-                                        ],
-                                      ),
-                                      onTap: () {
-                                        msg = 'niether Satisfied nor';
-                                        setState(() {
-                                          msg;
-                                          imgName = ['', '', 'b', '', '', ''];
-                                        });
-                                        print(msg);
-                                      },
+                                    onTap: () {
+                                      msg = 'Disatisfied';
+                                      setState(() {
+                                        msg;
+                                        imgName = ['', 'b', '', '', '', ''];
+                                      });
+                                      print(msg);
+                                    },
+                                  ),
+                                  GestureDetector(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Image.asset(
+                                            'images/' +
+                                                imgNum[2].toString() +
+                                                imgName[2] +
+                                                '.png',
+                                            height: 50),
+                                        Text('Niether-Satisfied'),
+                                      ],
                                     ),
-                                  ],
+                                    onTap: () {
+                                      msg = 'niether Satisfied nor';
+                                      setState(() {
+                                        msg;
+                                        imgName = ['', '', 'b', '', '', ''];
+                                      });
+                                      print(msg);
+                                    },
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 44.0),
+                              ),
+                              Row(//ROW 2
+                                  children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 54),
                                 ),
-                                Row(//ROW 2
-                                    children: [
-                                  /*Padding(
-                                      padding: EdgeInsets.all(30.0),
-                                    ),*/
-                                  GestureDetector(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Image.asset(
-                                            'images/' +
-                                                imgNum[3].toString() +
-                                                imgName[3] +
-                                                '.png',
-                                            height: 50),
-                                        Text('Satisfied'),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      msg = 'Satisfied';
-                                      setState(() {
-                                        msg;
-                                        imgName = ['', '', '', 'b', '', ''];
-                                      });
-                                      print(msg);
-                                    },
+                                GestureDetector(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Image.asset(
+                                          'images/' +
+                                              imgNum[3].toString() +
+                                              imgName[3] +
+                                              '.png',
+                                          height: 50),
+                                      Text('Satisfied'),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 109.0),
+                                      ),
+                                    ],
                                   ),
-                                  GestureDetector(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Image.asset(
-                                            'images/' +
-                                                imgNum[4].toString() +
-                                                imgName[4] +
-                                                '.png',
-                                            height: 50),
-                                        Text('highlysatisied'),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      msg = 'highlysatisied';
-                                      setState(() {
-                                        msg;
-                                        imgName = ['', '', '', '', 'b', ''];
-                                      });
-                                      print(msg);
-                                    },
+                                  onTap: () {
+                                    msg = 'Satisfied';
+                                    setState(() {
+                                      msg;
+                                      imgName = ['', '', '', 'b', '', ''];
+                                    });
+                                    print(msg);
+                                  },
+                                ),
+                                GestureDetector(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Image.asset(
+                                          'images/' +
+                                              imgNum[4].toString() +
+                                              imgName[4] +
+                                              '.png',
+                                          height: 50),
+                                      Text('highlysatisied'),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 94.0),
+                                      ),
+                                    ],
                                   ),
-                                  GestureDetector(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Image.asset(
-                                            'images/' +
-                                                imgNum[5].toString() +
-                                                imgName[5] +
-                                                '.png',
-                                            height: 50),
-                                        Text('NotApplicable'),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      msg = 'notapplicable';
-                                      setState(() {
-                                        msg;
-                                        imgName = ['', '', '', '', '', 'b'];
-                                      });
-                                      print(msg);
-                                    },
-                                  )
-                                ]),
+                                  onTap: () {
+                                    msg = 'highlysatisied';
+                                    setState(() {
+                                      msg;
+                                      imgName = ['', '', '', '', 'b', ''];
+                                    });
+                                    print(msg);
+                                  },
+                                ),
+                                GestureDetector(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Image.asset(
+                                          'images/' +
+                                              imgNum[5].toString() +
+                                              imgName[5] +
+                                              '.png',
+                                          height: 50),
+                                      Text('NotApplicable'),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    msg = 'notapplicable';
+                                    setState(() {
+                                      msg;
+                                      imgName = ['', '', '', '', '', 'b'];
+                                    });
+                                    print(msg);
+                                  },
+                                )
                               ]),
-                    Text(msg),
-                    SizedBox(
-                      height: 20.0,
+                            ]),
+
+
+
+                  Padding(
+                    padding: const EdgeInsets.only(top: 74.0),
+                  ),
+                  Text(msg),
+                  Center(
+                      child: RaisedButton(
+                    onPressed: () {
+                      setState(() {
+                        if (_count == 5) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Thanks()),
+                          );
+                        } else {
+                          _count++;
+                          _textFieldController = null;
+                          createData();
+                          imgName = ['', '', '', '', '', ''];
+                        }
+                      });
+                    },
+                    child: Text(
+                      "Next",
+                      style: TextStyle(color: Colors.white),
                     ),
-                    Center(
-                        child: RaisedButton(
-                      onPressed: () {
-                        setState(() {
-                          if (_count == 5) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Thanks()),
-                            );
-                          } else {
-                            _count++;
-                            _textFieldController = null;
-                            createData();
-                            imgName = ['', '', '', '', '', ''];
-                          }
-                        });
-                      },
-                      child: Text("Next"),
-                      color: Colors.lightBlueAccent,
-                    )),
-                  ]);
-                }),
-          ),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)),
+                    color: Theme.of(context).accentColor,
+                    elevation: 4.0,
+                    splashColor: Colors.blueGrey,
+                    //color: Colors.lightBlueAccent,
+                  )),
+                ]);
+              }),
         ));
   }
 }
