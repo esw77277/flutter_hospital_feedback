@@ -22,24 +22,26 @@ class userslist extends StatelessWidget {
               if (!snapshot.hasData) return new Text('loading wait..');
 
               return new ListView(
-                
                 children: snapshot.data.documents.map((document) {
-                return  Container(
-                  color: Color(0xffC0C0C0),
-                
-                  
- child: new ListTile( 
-                  
-                    contentPadding: EdgeInsets.all(6.0),
-                    
-                    leading: CircleAvatar(
-                      child:  Text('Pic'),
+                  return Card(
+                    child: new ListTile(
+                      contentPadding: EdgeInsets.all(6.0),
+                      leading: CircleAvatar(
+                        radius: 30.0,
+                        child: Text('Pic',style: TextStyle(color: Colors.white)),
+                        backgroundColor: Colors.green,
+                      ),
+                      title: Text(document['Name'],
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black.withOpacity(1.0),
+                            )),
+                      subtitle: Text(document['Email'],
+                          style: TextStyle(fontSize: 20.0,fontStyle: FontStyle.italic)),
                     ),
-                title: Text(document['Name'], style: TextStyle(fontSize: 20.0)),
-                subtitle: Text(document['Email'], style: TextStyle(fontSize: 20.0 )),
-                  ),
                   );
-                  
+
                   //return new ListTile(
                   //title: new Text(document['Name']),
                   //subtitle: new Text(document['Email']),
