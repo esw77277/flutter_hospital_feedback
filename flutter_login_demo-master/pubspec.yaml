@@ -19,7 +19,6 @@ dependencies:
   flutter_signin_button: ^0.2.8
 
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -48,6 +47,8 @@ flutter:
     - images/6.png
     - images/logo1.png
     - images/background.jpg
+    - images/successful.PNG
+    - images/thankubg.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
