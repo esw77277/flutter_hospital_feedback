@@ -114,7 +114,7 @@ class _HomePage extends State<Home> {
                 );
               },
             ),
-            new ListTile(
+           /* new ListTile(
               title: new Text("NABH Dashboard"),
               trailing: new Icon(Icons.dashboard),
               onTap: () {
@@ -123,7 +123,7 @@ class _HomePage extends State<Home> {
                   MaterialPageRoute(builder: (context) => NABHdashboard()),
                 );
               },
-            ),
+            ),*/
 
             new ListTile(
               title: new Text("Logout"),
