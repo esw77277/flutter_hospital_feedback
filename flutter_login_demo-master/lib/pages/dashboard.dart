@@ -3,7 +3,7 @@ import 'package:flutter_login_demo/services/authentication.dart';
 import 'login_signup_page.dart';
 import 'profile.dart';
 import 'rating.dart';
-import 'nabhdashboard.dart';
+import 'search-in-patient.dart';
 import 'userlist.dart';
 
 
@@ -100,7 +100,7 @@ class _HomePage extends State<Home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Reg()),
+                  MaterialPageRoute(builder: (context) => SearchPatient()),
                 );
               },
             ),
@@ -115,7 +115,7 @@ class _HomePage extends State<Home> {
                 );
               },
             ),
-            new ListTile(
+            /*new ListTile(
               title: new Text("NABH Dashboard"),
               trailing: new Icon(Icons.dashboard),
               onTap: () {
@@ -124,7 +124,7 @@ class _HomePage extends State<Home> {
                   MaterialPageRoute(builder: (context) => NABHdashboard()),
                 );
               },
-            ),
+            ),*/
             new ListTile(
               title: new Text("User List"),
               trailing: new Icon(Icons.person_pin_circle),
