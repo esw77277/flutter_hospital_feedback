@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_demo/services/authentication.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import'dashboard.dart';
-
+import 'dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginSignUpPage extends StatefulWidget {
   LoginSignUpPage({this.auth, this.onSignedIn});
@@ -11,6 +11,7 @@ class LoginSignUpPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _LoginSignUpPageState();
 }
+
 /*class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,11 @@ class LoginSignUpPage extends StatefulWidget {
   }
 }*/
 enum FormMode { LOGIN, SIGNUP }
+
 class _LoginSignUpPageState extends State<LoginSignUpPage> {
+  TextEditingController email_controller = TextEditingController();
+  TextEditingController pwd_controller = TextEditingController();
+
   final _formKey = new GlobalKey<FormState>();
   String _email;
   String _password;
@@ -42,6 +47,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     }
     return false;
   }
+
   // Perform login or signup
   void _validateAndSubmit() async {
     setState(() {
@@ -63,7 +69,9 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         setState(() {
           _isLoading = false;
         });
-        if (userId != null && userId.length > 0 && _formMode == FormMode.LOGIN) {
+        if (userId != null &&
+            userId.length > 0 &&
+            _formMode == FormMode.LOGIN) {
           widget.onSignedIn();
         }
       } catch (e) {
@@ -78,12 +86,14 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       }
     }
   }
+
   @override
   void initState() {
     _errorMessage = "";
     _isLoading = false;
     super.initState();
   }
+
   void _changeFormToSignUp() {
     _formKey.currentState.reset();
     _errorMessage = "";
@@ -91,6 +101,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       _formMode = FormMode.SIGNUP;
     });
   }
+
   void _changeFormToLogin() {
     _formKey.currentState.reset();
     _errorMessage = "";
@@ -98,31 +109,38 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       _formMode = FormMode.LOGIN;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     _isIos = Theme.of(context).platform == TargetPlatform.iOS;
     return new Scaffold(
         body: Stack(
-          children: <Widget>[
-            Center(
-              child: new Image.asset(
-                'images/background.jpg',
-                width: size.width,
-                height: size.height,
-                fit: BoxFit.fill,
-              ),
-            ),
-            _showBody(),
-            _showCircularProgress(),
-          ],
-        ));
+      children: <Widget>[
+        Center(
+          child: new Image.asset(
+            'images/background.jpg',
+            width: size.width,
+            height: size.height,
+            fit: BoxFit.fill,
+          ),
+        ),
+        _showBody(),
+        _showCircularProgress(),
+      ],
+    ));
   }
-  Widget _showCircularProgress(){
+
+  Widget _showCircularProgress() {
     if (_isLoading) {
       return Center(child: CircularProgressIndicator());
-    } return Container(height: 0.0, width: 0.0,);
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
   }
+
   void _showVerifyEmailSentDialog() {
     showDialog(
       context: context,
@@ -130,12 +148,13 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Verify your account"),
-          content: new Text("Link to verify account has been sent to your email"),
+          content:
+              new Text("Link to verify account has been sent to your email"),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Dismiss"),
               onPressed: () {
-               // _changeFormToLogin();
+                // _changeFormToLogin();
                 Navigator.of(context).pop();
               },
             ),
@@ -144,7 +163,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       },
     );
   }
-  Widget _showBody(){
+
+  Widget _showBody() {
     return new Container(
         padding: EdgeInsets.all(30.0),
         child: new Form(
@@ -165,20 +185,18 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               _showPasswordInput(),
               _showPrimaryButton(),
               SizedBox(
-                height: 50.0,
-                width: 50.0,
+                height: 10.0,
+                width: 10.0,
               ),
-              SignInButton(
-                Buttons.Google,
-                text: "Sign up with Google",
-                onPressed: () {},
-              ),
+              _showGoogleButton(),
+              _showFacebook(),
               //_showSecondaryButton(),
               _showErrorMessage(),
             ],
           ),
         ));
   }
+
   Widget _showErrorMessage() {
     if (_errorMessage != null && _errorMessage.length > 0) {
       return new Text(
@@ -195,15 +213,17 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       );
     }
   }
+
   Widget _showLogo() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0,25.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
     );
     /*new Hero(
       tag: 'hero',
       child: FlutterLogo(size: 100.0),
     );*/
   }
+
   Widget _showEmailInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
@@ -217,6 +237,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               Icons.account_box,
               color: Colors.black,
             )),
+        controller: email_controller,
+
         validator: (value) {
           if (value.isEmpty) {
             setState(() {
@@ -229,6 +251,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       ),
     );
   }
+
   Widget _showPasswordInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
@@ -243,6 +266,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
           ),
           hintText: 'Password',
         ),
+        controller: pwd_controller,
         validator: (value) {
           if (value.isEmpty) {
             setState(() {
@@ -255,47 +279,74 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       ),
     );
   }
-  /*Widget _showSecondaryButton() {
-    return new FlatButton(
-      child: _formMode == FormMode.LOGIN
-          ? new Text('Create an account',
-              style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300))
-          : new Text('Have an account? Sign in',
-              style:
-                  new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
-      onPressed: _formMode == FormMode.LOGIN
-          ? _changeFormToSignUp
-          : _changeFormToLogin,
-    );
-  }*/
+
   Widget _showPrimaryButton() {
     return new Padding(
-      padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
-
+      padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
       child: SizedBox(
-        height: 70.0,
+        height: 55.0,
         child: new RaisedButton(
-
           onPressed: () {
+            FirebaseAuth.instance
+                .signInWithEmailAndPassword(email: email_controller.text, password: pwd_controller.text)
+                .then((FirebaseUser user) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Home()),
+              );
+            }).catchError((e) {
+              print(e);
+            });
+          },
+
+          /*onPressed: () {
             _formMode == FormMode.LOGIN;
             _validateAndSubmit;
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Home()),
             );
-          },
+          },*/
           elevation: 5.0,
           //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
           color: Colors.lightBlue,
 
           child: new Text('LOGIN',
-    style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+              style: new TextStyle(fontSize: 20.0, color: Colors.white)),
           /*child: _formMode == FormMode.LOGIN
               ? new Text('LOGIN',
               style: new TextStyle(fontSize: 20.0, color: Colors.white))
               : new Text('Create account',
               style: new TextStyle(fontSize: 20.0, color: Colors.white)),
           onPressed: _validateAndSubmit,*/
+        ),
+      ),
+    );
+  }
+  Widget _showGoogleButton() {
+    return new Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+
+      child: SizedBox(
+          height: 55.0,
+          child: new SignInButton(
+            Buttons.Google,
+            onPressed: () {},
+          )
+      ),
+    );
+  }
+
+  Widget _showFacebook() {
+    return new Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+
+      child: SizedBox(
+        height: 55.0,
+        child: new SignInButton(
+          Buttons.Facebook,
+
+          onPressed: () {},
         ),
       ),
     );
