@@ -19,12 +19,10 @@ dependencies:
   flutter_signin_button: ^0.2.8
 
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.6.1
-  json_serializable: ^3.0.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -47,10 +45,15 @@ flutter:
     - images/4.png
     - images/5.png
     - images/6.png
+    - images/1b.png
+    - images/2b.png
+    - images/3b.png
+    - images/4b.png
+    - images/5b.png
+    - images/6b.png
     - images/logo1.png
     - images/background.jpg
-    - images/successful.PNG
-    - images/thankubg.jpg
+    - thankubg.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
