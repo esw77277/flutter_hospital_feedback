@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_demo/services/authentication.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import'dashboard.dart';
 
 
 class LoginSignUpPage extends StatefulWidget {
@@ -134,7 +135,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
             new FlatButton(
               child: new Text("Dismiss"),
               onPressed: () {
-                _changeFormToLogin();
+               // _changeFormToLogin();
                 Navigator.of(context).pop();
               },
             ),
@@ -274,15 +275,27 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
       child: SizedBox(
         height: 70.0,
         child: new RaisedButton(
+
+          onPressed: () {
+            _formMode == FormMode.LOGIN;
+            _validateAndSubmit;
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
+          },
           elevation: 5.0,
           //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
           color: Colors.lightBlue,
-          child: _formMode == FormMode.LOGIN
+
+          child: new Text('LOGIN',
+    style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+          /*child: _formMode == FormMode.LOGIN
               ? new Text('LOGIN',
               style: new TextStyle(fontSize: 20.0, color: Colors.white))
               : new Text('Create account',
               style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-          onPressed: _validateAndSubmit,
+          onPressed: _validateAndSubmit,*/
         ),
       ),
     );
