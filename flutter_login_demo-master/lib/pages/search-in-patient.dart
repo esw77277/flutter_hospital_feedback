@@ -3,6 +3,7 @@ import 'login_signup_page.dart';
 import 'rating.dart';
 import 'userlist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dashboard.dart';
 
 class SearchPatient extends StatefulWidget {
   @override
@@ -11,37 +12,38 @@ class SearchPatient extends StatefulWidget {
 
 class _SearchPatientState extends State<SearchPatient> {
   TextEditingController editingController = TextEditingController();
-  List<String> duplicateItems = new List<String>();
-  var items = List<String>();
+
+  static List<String> pIds = new List<String>();
+  static List<String> pNames = new List<String>();
+  static List<String> pMobiles = new List<String>();
+  static List<String> pEmails = new List<String>();
+
+  String pID, pNAME, pEMAIL, pMOBILE;
+
+  bool isSearchActive = false;
 
   @override
   void initState() {
-    items.addAll(duplicateItems);
     super.initState();
   }
 
-  void filterSearchResults(String query) {
-    List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(duplicateItems);
-    if (query.isNotEmpty) {
-      List<String> dummyListData = List<String>();
-      dummySearchList.forEach((item) {
-        if (item.contains(query)) {
-          dummyListData.add(item);
-        }
-      });
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        items.clear();
-        items.addAll(duplicateItems);
-      });
-    }
+  void clearSearchResults(){
+    pID = pNAME = pEMAIL = pMOBILE = 'Fetching...'; editingController.text =''; isSearchActive = false;
   }
+
+  void filterSearchResults(String query) {
+      for (int i = 0; i < pIds.length; i++) {
+        if (query == pIds[i]) {
+          setState(() {
+            pID = pIds[i];
+            pNAME = pNames[i];
+            pEMAIL = pEmails[i];
+            pMOBILE = pMobiles[i];
+            isSearchActive = true;
+          });
+        }
+      }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +69,16 @@ class _SearchPatientState extends State<SearchPatient> {
                 ),
               ),
               new ListTile(
+                title: new Text("Home"),
+                trailing: new Icon(Icons.home),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                  );
+                },
+              ),
+              new ListTile(
                 title: new Text("Search Patient"),
                 trailing: new Icon(Icons.person),
                 onTap: () {
@@ -82,7 +94,7 @@ class _SearchPatientState extends State<SearchPatient> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Reg()),
+                    MaterialPageRoute(builder: (context) => SearchPatient()),
                   );
                 },
               ),
@@ -96,16 +108,16 @@ class _SearchPatientState extends State<SearchPatient> {
                   );
                 },
               ),
-              new ListTile(
-                title: new Text("Search Patient"),
-                trailing: new Icon(Icons.dashboard),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SearchPatient()),
-                  );
-                },
-              ),
+              /*new ListTile(
+              title: new Text("NABH Dashboard"),
+              trailing: new Icon(Icons.dashboard),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NABHdashboard()),
+                );
+              },
+            ),*/
               new ListTile(
                 title: new Text("User List"),
                 trailing: new Icon(Icons.person_pin_circle),
@@ -131,7 +143,6 @@ class _SearchPatientState extends State<SearchPatient> {
         ),
         body: Column(children: <Widget>[
           StreamBuilder(
-              //stream: bloc.getReult,
               stream: Firestore.instance
                   .collection('In-Patient-Details')
                   .snapshots(),
@@ -140,11 +151,21 @@ class _SearchPatientState extends State<SearchPatient> {
                 if (!snapshot.hasData) {
                   return Text('Loading Data... Please Wait');
                 }
-                duplicateItems =
-                    new List<String>(snapshot.data.documents.length);
+                int listSize = snapshot.data.documents.length;
+                pEmails.length =
+                    pMobiles.length = pNames.length = pIds.length = listSize;
                 for (int i = 0; i < snapshot.data.documents.length; i++) {
-                  duplicateItems[i] = (snapshot.data.documents[i]['ID'] != null)
+                  pIds[i] = (snapshot.data.documents[i]['ID'] != null)
                       ? snapshot.data.documents[i]['ID']
+                      : 'NA';
+                  pNames[i] = (snapshot.data.documents[i]['NAME'] != null)
+                      ? snapshot.data.documents[i]['NAME']
+                      : 'NA';
+                  pMobiles[i] = (snapshot.data.documents[i]['MOBILE'] != null)
+                      ? snapshot.data.documents[i]['MOBILE']
+                      : 'NA';
+                  pEmails[i] = (snapshot.data.documents[i]['EMAIL'] != null)
+                      ? snapshot.data.documents[i]['EMAIL']
                       : 'NA';
                 }
                 return Text('');
@@ -152,100 +173,92 @@ class _SearchPatientState extends State<SearchPatient> {
           new Container(
             color: Colors.black12,
             child: new Padding(
-              padding: const EdgeInsets.all(3.0),
+              padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
               child: new Card(
                 child: new ListTile(
                   leading: new Icon(Icons.search),
                   title: new TextField(
-                    onSubmitted: (vlaue) {
+                    onSubmitted: (value) {
                       Text('submitted');
                     },
                     onChanged: (value) {
-                      filterSearchResults(value);
+                      if (value.length > 5)
+                        filterSearchResults(value);
                     },
                     controller: editingController,
                     decoration: new InputDecoration(
-                        hintText: 'Search In-Patient ID',
+                        hintText: 'Search Patient ID here.. ',
                         border: InputBorder.none),
                   ),
                   trailing: new IconButton(
                     icon: new Icon(Icons.cancel),
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        clearSearchResults();
+                      });
+                    },
                   ),
                 ),
-
-
               ),
-
-
             ),
-
           ),
-          SizedBox(
-            height: 20.0,
-            width: 20.0,
-          ),
-          FormUI(),
-          Expanded(
+          Column(children: <Widget>[
+            Card(child: ListTile(
+                title: Text(pID != null ? pID : 'Loading...'))
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.person,size: 30.0),
+                title: Text(pNAME != null ? pNAME : 'Fetching...'),
+                subtitle: Text(isSearchActive ? 'Name Verified.' : 'Name'),
+                //trailing: Icon(Icons.more_vert),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.phone,size: 30.0),
+                title: Text(pMOBILE != null ? pMOBILE : 'Fetching...'),
+                subtitle: Text(isSearchActive ? 'Mobile Verified.' : 'Mobile'),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.mail,size: 30.0),
+                title: Text(pEMAIL != null ? pEMAIL : 'Fetching...'),
+                subtitle: Text(isSearchActive ? 'Email Verified.' : 'Email'),
+              ),
+            ),
+          ]),
+          /*Expanded(
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: items.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text('${items[index]}'),
+                  onTap: () {
+                    setState(() {
+                      editingController.text = items[index];
+                      items.clear();
+                      items.length = 0;
+                    });
+                  },
                 );
               },
             ),
-          ),
+          ),*/
+          /*RaisedButton(
+            child: const Text(
+              'Submit',
+              style: TextStyle(color: Colors.white, fontSize: 15),
+            ),
+            color: Theme.of(context).accentColor,
+            elevation: 4.0,
+            splashColor: Colors.blueGrey,
+            onPressed: () {
+              // Perform some action
+            },
+          ),*/
         ]));
   }
-
-// Here is our Form UI
-  Widget FormUI() {
-    return new Column(
-
-      children: <Widget>[
-        new TextFormField(
-          decoration: const InputDecoration(
-            icon: const Icon(Icons.person),
-            hintText: 'Enter your first and last name',
-            labelText: 'Name',
-          ),
-        ),
-        new TextFormField(
-          decoration: const InputDecoration(
-            icon: const Icon(Icons.person),
-            hintText: 'Enter your first and last name',
-            labelText: 'Name',
-          ),
-        ),
-        new TextFormField(
-          decoration: const InputDecoration(
-            icon: const Icon(Icons.person),
-            hintText: 'Enter your first and last name',
-            labelText: 'Name',
-          ),
-        ),
-        new TextFormField(
-          decoration: const InputDecoration(
-
-            icon: const Icon(Icons.person),
-            hintText: 'Enter your first and last name',
-            labelText: 'Name',
-          ),
-        ),
-        new SizedBox(
-          height: 10.0,
-        ),
-        new RaisedButton(
-          elevation: 4.0,
-          color: Theme.of(context).accentColor,
-          onPressed: _validateInputs,
-          child: new Text('Validate',style: TextStyle(color: Colors.white),),
-        )
-      ],
-    );
-  }
-
-  void _validateInputs() {}
 }
