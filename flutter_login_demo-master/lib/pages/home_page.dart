@@ -144,7 +144,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(150.0), // here the desired height
+            child: AppBar(
+              title: new Text('Feedback'),
+              //backgroundColor: const Color(0xFF0099a9),
+              actions: <Widget>[
+                new FlatButton(
+                    child: new Text('Logout',
+                        style:
+                            new TextStyle(fontSize: 17.0, color: Colors.white)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginSignUpPage()),
+                      );
+                    })
+              ],
+            )),
+        /*appBar: new AppBar(
           title: new Text('Feedback'),
           //backgroundColor: const Color(0xFF0099a9),
           actions: <Widget>[
@@ -158,7 +177,8 @@ class _HomePageState extends State<HomePage> {
                   );
                 })
           ],
-        ),
+
+        ),*/
         body: Container(
           child: StreamBuilder(
               stream: Firestore.instance.collection('Questions').snapshots(),
@@ -168,16 +188,17 @@ class _HomePageState extends State<HomePage> {
                 }
                 return //Row(
                     Column(children: <Widget>[
-                      Container(
-                        /*padding: const EdgeInsets.only(
-                            left: 44.0, top: 30, bottom: 20, right: 42.2),
-                        color: Color.fromRGBO(208, 218, 226, 0.9),*/
-                        child: new Text(
-                          snapshot.data.documents[_count]['Question'],
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                      ),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 100.0, top: 30, bottom: 20, right: 100.0),
+                    color: Color.fromRGBO(208, 218, 226, 0.9),
+                    child: new Text(
+                      snapshot.data.documents[_count]['Question'],
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                  ),
 
                   _count == 5
                       ? CheckboxGroup(
@@ -211,7 +232,7 @@ class _HomePageState extends State<HomePage> {
                                 //ROW 1
                                 children: <Widget>[
                                   Padding(
-                                    padding: EdgeInsets.all(23.0),
+                                    padding: EdgeInsets.all(25.0),
                                   ),
                                   GestureDetector(
                                     child: Column(
@@ -284,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                               Row(//ROW 2
                                   children: [
                                 Padding(
-                                  padding: EdgeInsets.only(left: 54),
+                                  padding: EdgeInsets.only(left: 50.0),
                                 ),
                                 GestureDetector(
                                   child: Column(
@@ -360,12 +381,11 @@ class _HomePageState extends State<HomePage> {
                               ]),
                             ]),
 
-
-
                   Padding(
                     padding: const EdgeInsets.only(top: 74.0),
                   ),
                   //Text(msg),
+
                   Center(
                       child: RaisedButton(
                     onPressed: () {
@@ -383,14 +403,28 @@ class _HomePageState extends State<HomePage> {
                         }
                       });
                     },
-                    child: Text(
-                      "Next",
-                      style: TextStyle(color: Colors.white),
+                    child: Column(
+                      // Replace with a Row for horizontal icon + text
+                      children: <Widget>[
+                        /*Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[*/
+                            Text(
+                              "NEXT",
+                              style: TextStyle(color: Colors.white),
+                              textScaleFactor: 1.8,
+                            ),
+                            //Icon(Icons.arrow_forward, color: Colors.white),
+                          ],
+                       // ),
+                      //],
                     ),
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     color: Theme.of(context).accentColor,
-                    elevation: 4.0,
+                    elevation: 5.0,
+                    padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
                     splashColor: Colors.blueGrey,
                     //color: Colors.lightBlueAccent,
                   )),

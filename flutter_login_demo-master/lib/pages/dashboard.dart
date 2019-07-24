@@ -38,7 +38,28 @@ class _HomePage extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(150.0), // here the desired height
+          child: AppBar(
+            title: new Text('Home'),
+            //backgroundColor: const Color(0xFF0099a9),
+            actions: <Widget>[
+              new FlatButton(
+                  child: new Text('Logout',
+                      style:
+                      new TextStyle(fontSize: 17.0, color: Colors.white)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LoginSignUpPage()),
+                    );
+                  })
+            ],
+          )),
+      /*appBar: new
+
+      AppBar(
         title: new Text('DashBoard'),
         actions: <Widget>[
           new FlatButton(
@@ -52,7 +73,7 @@ class _HomePage extends State<Home> {
                 );
               })
         ],
-      ),
+      ),*/
       drawer: new Drawer(
         child: new ListView(
           children: [
