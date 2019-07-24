@@ -122,12 +122,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _showNameInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-      child: new TextFormField(
+      child: new TextField(
           keyboardType: TextInputType.text,
-          validator: validateName,
-          onSaved: (String val) {
-            uname = val;
+          //validator: validateName,
+          onChanged: (String uname){
+            getUname(uname);
           },
+          /*onSaved: (String val) {
+            uname = val;
+          },*/
           //decoration: InputDecoration(labelText: "Name"),
           style: style,
           decoration:new InputDecoration(
@@ -144,12 +147,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _showEmailInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-      child: new TextFormField(
+      child: new TextField(
         keyboardType: TextInputType.emailAddress,
-        validator: validateEmail,
-        onSaved: (String val) {
-          uemail = val;
+        //validator: validateEmail,
+        onChanged: (String uemail){
+          getUemail(uemail);
         },
+        /*onSaved: (String val) {
+          uemail = val;
+        },*/
         style: style,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -165,12 +171,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _showMobileInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-      child: new TextFormField(
+      child: new TextField(
         keyboardType: TextInputType.text,
-        validator: validateMobile,
-        onSaved: (String val) {
-          umobile = val;
+        //validator: validateMobile,
+        onChanged: (String umobile){
+          getUmobile(umobile);
         },
+        /*onSaved: (String val) {
+          umobile = val;
+        },*/
         style: style,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -200,8 +209,12 @@ class _MyHomePageState extends State<MyHomePage> {
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
-            _validateInputs();
-            // createData();
+            //_validateInputs();
+            createData();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
           },
           child: Text("Register",
               textAlign: TextAlign.center,

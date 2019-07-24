@@ -131,9 +131,9 @@ class _HomePageState extends State<HomePage> {
     DocumentReference ds =
         Firestore.instance.collection('User_Ratings').document(_uemail);
     Map<String, dynamic> rdata = {
-      "Question_ID": _count,
-      "Rating": _rating,
-      "User_Email": _uemail,
+      "QuestionID": _count,
+      "Rating": msg,
+      "Email": _uemail,
     };
     ds.setData(rdata).whenComplete(() {
       print("Submitted Successful");
@@ -365,7 +365,7 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 74.0),
                   ),
-                  Text(msg),
+                  //Text(msg),
                   Center(
                       child: RaisedButton(
                     onPressed: () {

@@ -17,6 +17,8 @@ dependencies:
   pie_chart: ^1.0.0
   grouped_buttons: ^1.0.3
   flutter_signin_button: ^0.2.8
+  build_runner: ^1.6.1
+  json_serializable: ^3.0.0
 
 
 dev_dependencies:

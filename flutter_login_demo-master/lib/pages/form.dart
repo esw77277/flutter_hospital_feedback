@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-void main() => runApp(Reg());
+void main() => runApp(Registration());
 
-class Reg extends StatefulWidget {
+class Registration extends StatefulWidget {
   //Reg();
   @override
   State<StatefulWidget> createState() => _RegState();
 
 }
-class _RegState extends State<Reg> {
+class _RegState extends State<Registration> {
 
   String uname,uemail,umobile;
 
