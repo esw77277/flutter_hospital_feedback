@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_signup_page.dart';
+import 'home_page.dart';
 import 'rating.dart';
 import 'userlist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,8 +20,8 @@ class _SearchPatientState extends State<SearchPatient> {
   static List<String> pEmails = new List<String>();
 
   String pID, pNAME, pEMAIL, pMOBILE;
-
-  bool isSearchActive = false;
+  String btnTxt = 'Verify patient ID & Proceed';
+  bool isSearchActive = false, isUserVerified = false;
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _SearchPatientState extends State<SearchPatient> {
   }
 
   void clearSearchResults(){
-    pID = pNAME = pEMAIL = pMOBILE = 'Fetching...'; editingController.text =''; isSearchActive = false;
+    pID = pNAME = pEMAIL = pMOBILE = 'Fetching...'; editingController.text =''; isSearchActive =isUserVerified = false;btnTxt = 'Verify patient ID & Proceed';
   }
 
   void filterSearchResults(String query) {
@@ -39,7 +40,8 @@ class _SearchPatientState extends State<SearchPatient> {
             pNAME = pNames[i];
             pEMAIL = pEmails[i];
             pMOBILE = pMobiles[i];
-            isSearchActive = true;
+            isSearchActive = isUserVerified = true;
+            btnTxt = 'Proceed to give Feedback';
           });
         }
       }
@@ -229,6 +231,24 @@ class _SearchPatientState extends State<SearchPatient> {
               ),
             ),
           ]),
+          RaisedButton(
+            child: Text(
+              btnTxt.toString(),
+
+              style: TextStyle(color: Colors.white, fontSize: 15),
+            ),
+            color: Theme.of(context).accentColor,
+            elevation: 4.0,
+            splashColor: Colors.blueGrey,
+            onPressed: () {
+              isUserVerified ?
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              )
+                  :btnTxt = 'Verify patient ID & Proceed';
+            },
+          ),
           /*Expanded(
             child: ListView.builder(
               shrinkWrap: true,
@@ -246,18 +266,6 @@ class _SearchPatientState extends State<SearchPatient> {
                 );
               },
             ),
-          ),*/
-          /*RaisedButton(
-            child: const Text(
-              'Submit',
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            ),
-            color: Theme.of(context).accentColor,
-            elevation: 4.0,
-            splashColor: Colors.blueGrey,
-            onPressed: () {
-              // Perform some action
-            },
           ),*/
         ]));
   }
