@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_demo/services/authentication.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'home_page.dart';
 import 'dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -47,6 +49,8 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     }
     return false;
   }
+
+  static String userRole;
 
   // Perform login or signup
   void _validateAndSubmit() async {
@@ -238,7 +242,6 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               color: Colors.black,
             )),
         controller: email_controller,
-
         validator: (value) {
           if (value.isEmpty) {
             setState(() {
@@ -288,64 +291,74 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         child: new RaisedButton(
           onPressed: () {
             FirebaseAuth.instance
-                .signInWithEmailAndPassword(email: email_controller.text, password: pwd_controller.text)
+                .signInWithEmailAndPassword(
+                    email: email_controller.text, password: pwd_controller.text)
                 .then((FirebaseUser user) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Home()),
-              );
+              final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+              firebaseAuth.onAuthStateChanged
+                  .firstWhere((user) => user != null)
+                  .then((user) {
+                setState(() {
+                  getUserRole(user.uid);
+                });
+              });
             }).catchError((e) {
               print(e);
             });
           },
-
-          /*onPressed: () {
-            _formMode == FormMode.LOGIN;
-            _validateAndSubmit;
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
-          },*/
           elevation: 5.0,
           //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
           color: Colors.lightBlue,
 
           child: new Text('LOGIN',
               style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-          /*child: _formMode == FormMode.LOGIN
-              ? new Text('LOGIN',
-              style: new TextStyle(fontSize: 20.0, color: Colors.white))
-              : new Text('Create account',
-              style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-          onPressed: _validateAndSubmit,*/
         ),
       ),
     );
   }
+
+  getUserRole(String userID) {
+    Firestore.instance
+        .collection("users")
+        .where("uid", isEqualTo: userID)
+        .limit(1)
+        .snapshots()
+        .firstWhere((snapshot) => snapshot != null)
+        .then((snapshot) {
+      setState(() {
+        userRole = snapshot.documents[0]['role'];
+      });
+    });
+    //print("this is inner user ID: $userRole");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => userRole == 'user'
+              ? Home() //navigate to dashboard Page
+              : userRole == 'admin' ? HomePage()  : ''),
+    );
+  }
+
   Widget _showGoogleButton() {
     return new Padding(
       padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
-
       child: SizedBox(
           height: 55.0,
           child: new SignInButton(
             Buttons.Google,
             onPressed: () {},
-          )
-      ),
+          )),
     );
   }
 
   Widget _showFacebook() {
     return new Padding(
       padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-
       child: SizedBox(
         height: 55.0,
         child: new SignInButton(
           Buttons.Facebook,
-
           onPressed: () {},
         ),
       ),
