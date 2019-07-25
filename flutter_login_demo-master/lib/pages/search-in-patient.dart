@@ -50,6 +50,7 @@ class _SearchPatientState extends State<SearchPatient> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
         appBar: new AppBar(
           title: new Text('Search Patient Here'),
         ),
