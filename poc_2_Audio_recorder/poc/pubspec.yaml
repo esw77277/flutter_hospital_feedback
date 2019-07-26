@@ -1,0 +1,52 @@
+name: poc
+description: A simple Flutter app to help you achieve your goals!
+
+version: 1.1+2
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  dynamic_theme:
+  eva_icons_flutter:
+  flutter_local_notifications:
+  flutter_speed_dial:
+  path_provider:
+  sqflite:
+  url_launcher:
+  timeline_list: ^0.0.3
+  shared_preferences: "^0.4.2"
+  #fluttertoast: ^2.0.7
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: "^0.7.2"
+
+flutter:
+  uses-material-design: true
+  assets:
+      - assets/play.png
+      - assets/pause.png
+      - assets/icon.png
+      - assets/urmil-vector.png
+      - assets/images/logo.png
+      - assets/images/powered_by.png
+      - assets/images/email_icon.png
+      - assets/images/password_icon.png
+      - assets/images/user_icon.png
+      - assets/stop.png
+
+flutter_icons:
+  android: launcher_icon
+  image_path_android: assets/icon-android.png
+  ios: true
+  image_path_ios: assets/icon-ios.png
+
+
+
